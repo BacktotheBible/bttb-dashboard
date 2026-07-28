@@ -337,6 +337,7 @@ const KEY   = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJl
 const HEADERS = { apikey: KEY, Authorization: "Bearer " + KEY };
 const BRAND = "#2563eb", ACCENT = "#10b981", WARN = "#dc2626", MUTED = "#9ca3af";
 const PROMO_COLOR = "#e91e8c", PIVOT_PROMO = "2026-07-15"; // Jul 15 workout-change benchmark (6 videos → 2)
+const PIVOT_PLAY = "2026-03-30"; // Mar 30 playlist launch (1 video → 6)
 const fmt = n => Number(n).toLocaleString();
 const pct = (a, b) => b > 0 ? Math.round(1000 * a / b) / 10 : 0;
 
@@ -468,7 +469,7 @@ async function load() {
       type: "scatter", mode: "lines", fill: "tozeroy",
       line: { color: BRAND, width: 2.4 }, fillcolor: "rgba(37,99,235,0.12)",
       hovertemplate: "%{x|%b %d}<br>%{y} active users<extra></extra>",
-    }], layout(pivotLine(PIVOT_PROMO, "Jul 15", PROMO_COLOR)), config);
+    }], layout(pivotLines({ date: PIVOT_PLAY, label: "Mar 30" }, { date: PIVOT_PROMO, label: "Jul 15", color: PROMO_COLOR })), config);
 
     // Video sessions
     Plotly.newPlot("chart-videos", [
@@ -478,7 +479,7 @@ async function load() {
         type: "bar", name: "Completed", marker: { color: ACCENT } },
     ], layout({ barmode: "overlay", showlegend: true,
                 legend: { orientation: "h", y: 1.1, x: 0.35 },
-                ...pivotLine(PIVOT_PROMO, "Jul 15", PROMO_COLOR) }), config);
+                ...pivotLines({ date: PIVOT_PLAY, label: "Mar 30" }, { date: PIVOT_PROMO, label: "Jul 15", color: PROMO_COLOR }) }), config);
 
     // Funnel
     const fStarts = daily.reduce((s,r)=>s+r.video_starts, 0);
@@ -511,7 +512,7 @@ async function load() {
       x: daily.map(r => r.day), y: daily.map(r => r.ai_messages),
       type: "bar", marker: { color: "#8b5cf6" },
       hovertemplate: "%{x|%b %d}<br>%{y} messages<extra></extra>",
-    }], layout(pivotLine(PIVOT_PROMO, "Jul 15", PROMO_COLOR)), config);
+    }], layout(pivotLines({ date: PIVOT_PLAY, label: "Mar 30" }, { date: PIVOT_PROMO, label: "Jul 15", color: PROMO_COLOR })), config);
 
     // === AI ENGAGEMENT ===
     const aiUsers = daily.map(r => r.users_with_ai_msgs || 0);
@@ -533,7 +534,7 @@ async function load() {
       yaxis2: { overlaying: "y", side: "right", ticksuffix: "%",
                 tickfont: { color: "#dc2626", size: mFontSz }, title: isMobile ? "" : "% of DAU",
                 titlefont: { color: "#dc2626" }, automargin: true },
-      ...pivotLine(PIVOT_PROMO, "Jul 15", PROMO_COLOR),
+      ...pivotLines({ date: PIVOT_PLAY, label: "Mar 30" }, { date: PIVOT_PROMO, label: "Jul 15", color: PROMO_COLOR }),
     }), config);
 
     Plotly.newPlot("chart-ai-depth", [{
@@ -544,7 +545,7 @@ async function load() {
       hovertemplate: "%{x|%b %d}<br>%{y:.1f} msgs/user<extra></extra>",
     }], layout({
       yaxis: { title: "Messages per AI user", automargin: true },
-      ...pivotLine(PIVOT_PROMO, "Jul 15", PROMO_COLOR),
+      ...pivotLines({ date: PIVOT_PLAY, label: "Mar 30" }, { date: PIVOT_PROMO, label: "Jul 15", color: PROMO_COLOR }),
     }), config);
 
     // === BEFORE vs AFTER MARCH 30 ===
@@ -786,7 +787,7 @@ async function load() {
         hovertemplate: "%{x|%a %b %d}<br>%{y:.1f} vids/user<extra>Weekend</extra>" },
     ], layout({ showlegend: true, legend: { orientation: "h", y: 1.1, x: 0 },
                 yaxis: { title: "Videos / user", automargin: true },
-                ...pivotLine(PIVOT_PROMO, "Jul 15", PROMO_COLOR) }), config);
+                ...pivotLines({ date: PIVOT_PLAY, label: "Mar 30" }, { date: PIVOT_PROMO, label: "Jul 15", color: PROMO_COLOR }) }), config);
 
     // Weekday vs weekend scatter: completion rate
     Plotly.newPlot("chart-daytype-cr", [
@@ -800,7 +801,7 @@ async function load() {
         hovertemplate: "%{x|%a %b %d}<br>%{y:.1f}%<extra>Weekend</extra>" },
     ], layout({ showlegend: true, legend: { orientation: "h", y: 1.1, x: 0 },
                 yaxis: { title: "Completion %", ticksuffix: "%", automargin: true },
-                ...pivotLine(PIVOT_PROMO, "Jul 15", PROMO_COLOR) }), config);
+                ...pivotLines({ date: PIVOT_PLAY, label: "Mar 30" }, { date: PIVOT_PROMO, label: "Jul 15", color: PROMO_COLOR }) }), config);
 
     // === PROGRAM PERFORMANCE ===
     const mainProgs = programs.filter(p => p.starts >= 10);
