@@ -15,6 +15,7 @@
     --border: #e5e7eb;
     --text: #111827;
     --muted: #6b7280;
+    --promo: #db2777;
   }
   * { box-sizing: border-box; }
   body {
@@ -95,6 +96,11 @@
   .compare-card .delta { font-size: 13px; font-weight: 600; margin-top: 4px; }
   .delta.up { color: var(--accent); }
   .delta.down { color: var(--warn); }
+  .compare-grid.evolution { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+  .compare-grid.evolution .era-value { font-size: 21px; }
+  .compare-grid.evolution .era-row { gap: 16px; }
+  .delta-pair { margin-top: 8px; }
+  .delta-pair .delta { margin-right: 14px; }
   .program-tag {
     display: inline-block; background: #eff6ff; color: #1e40af;
     padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600;
@@ -214,6 +220,9 @@
   <div class="card"><h3>Videos per active user per day</h3><div id="chart-depth" class="chart"></div></div>
   <div class="card"><h3>Daily completion rate</h3><div id="chart-completion-trend" class="chart"></div></div>
 </div>
+
+<h2>Workout format evolution — single → 6 videos → 2 videos</h2>
+<div id="era-evolution"></div>
 
 <h2>Playlist depth — how deep do users go?</h2>
 <div class="grid">
@@ -601,6 +610,67 @@ async function load() {
               <div class="era-value" style="color:var(--accent)">${fmt(aStarts)}</div></div>
           </div>
           ${deltaPct(aStarts / Math.max(after.length,1), bStarts / Math.max(before.length,1))}
+        </div>
+      </div>`;
+
+    // === WORKOUT FORMAT EVOLUTION — single → 6 videos → 2 videos ===
+    // Three adjacent eras split on the two workout changes (Mar 30, Jul 15).
+    const single = depth.filter(r => r.day < PIVOT);                            // 1 SFT video
+    const six    = depth.filter(r => r.day >= PIVOT && r.day < PIVOT_PROMO);    // 6 program videos
+    const two    = depth.filter(r => r.day >= PIVOT_PROMO);                     // 2 main videos
+    const eStarts    = arr => arr.reduce((s, r) => s + Number(r.total_starts), 0);
+    const ePerDay    = arr => arr.length ? eStarts(arr) / arr.length : 0;
+    // One card: three era columns + the two step-deltas (1→6, then 6→2).
+    const stepSpan = (label, a, b) => {
+      const d = b > 0 ? Math.round(100 * (a - b) / b) : 0;
+      const cls = d >= 0 ? "up" : "down", sign = d >= 0 ? "+" : "";
+      return `<span class="delta ${cls}">${label} ${sign}${d}%</span>`;
+    };
+    const stepPair = (suffix, v0, v1, v2) =>
+      `<div class="delta-pair">${stepSpan("1→6", v1, v0)}${stepSpan("6→2" + suffix, v2, v1)}</div>`;
+    const col = (label, value, meta, last) =>
+      `<div><div class="era-label">${label}</div>
+        <div class="era-value"${last ? ' style="color:var(--promo)"' : ""}>${value}</div>
+        ${meta ? `<div class="meta">${meta}</div>` : ""}</div>`;
+
+    document.getElementById("era-evolution").innerHTML = `
+      <p class="note" style="margin:0 0 12px;">Three workout formats side by side: 1 SFT video, then 6 program videos (Mar 30), then the 2 main videos (Jul 15). The 2-video era is an <strong>early read</strong> — only ${two.length} days so far.</p>
+      <div class="compare-grid evolution">
+        <div class="compare-card">
+          <h4>Videos per active user / day</h4>
+          <div class="era-row">
+            ${col("Single video", avg(single, "videos_per_user").toFixed(2))}
+            ${col("6 videos", avg(six, "videos_per_user").toFixed(2))}
+            ${col("2 videos", avg(two, "videos_per_user").toFixed(2), null, true)}
+          </div>
+          ${stepPair("", avg(single, "videos_per_user"), avg(six, "videos_per_user"), avg(two, "videos_per_user"))}
+        </div>
+        <div class="compare-card">
+          <h4>Avg completion rate</h4>
+          <div class="era-row">
+            ${col("Single video", avg(single, "completion_pct").toFixed(1) + "%")}
+            ${col("6 videos", avg(six, "completion_pct").toFixed(1) + "%")}
+            ${col("2 videos", avg(two, "completion_pct").toFixed(1) + "%", null, true)}
+          </div>
+          ${stepPair("", avg(single, "completion_pct"), avg(six, "completion_pct"), avg(two, "completion_pct"))}
+        </div>
+        <div class="compare-card">
+          <h4>Avg daily video starts</h4>
+          <div class="era-row">
+            ${col("Single video", ePerDay(single).toFixed(0))}
+            ${col("6 videos", ePerDay(six).toFixed(0))}
+            ${col("2 videos", ePerDay(two).toFixed(0), null, true)}
+          </div>
+          ${stepPair("", ePerDay(single), ePerDay(six), ePerDay(two))}
+        </div>
+        <div class="compare-card">
+          <h4>Total video starts</h4>
+          <div class="era-row">
+            ${col("Single video", fmt(eStarts(single)), single.length + " days")}
+            ${col("6 videos", fmt(eStarts(six)), six.length + " days")}
+            ${col("2 videos", fmt(eStarts(two)), two.length + " days", true)}
+          </div>
+          ${stepPair(" /day", ePerDay(single), ePerDay(six), ePerDay(two))}
         </div>
       </div>`;
 
