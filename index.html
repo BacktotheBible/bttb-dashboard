@@ -331,14 +331,20 @@ const layout = (extra = {}) => ({
 });
 const config = { displayModeBar: false, responsive: true };
 
-function pivotLine(pivotDate, label, color = WARN) {
+// Accepts one or more {date, label, color} markers so a chart can show
+// multiple benchmarks (e.g. Mar 30 playlist launch AND Jul 15 workout change).
+function pivotLines(...marks) {
   return {
-    shapes: [{ type: "line", x0: pivotDate, x1: pivotDate, y0: 0, y1: 1, yref: "paper",
-               line: { color, width: 2, dash: "dash" } }],
-    annotations: [{ x: pivotDate, y: 1.05, yref: "paper", text: label,
-                    showarrow: false, font: { size: 11, color },
-                    yanchor: "bottom", xanchor: "left" }],
+    shapes: marks.map(m => ({ type: "line", x0: m.date, x1: m.date, y0: 0, y1: 1, yref: "paper",
+               line: { color: m.color || WARN, width: 2, dash: "dash" } })),
+    annotations: marks.map(m => ({ x: m.date, y: 1.05, yref: "paper", text: m.label,
+                    showarrow: false, font: { size: 11, color: m.color || WARN },
+                    yanchor: "bottom", xanchor: "left" })),
   };
+}
+// Single-marker convenience wrapper (keeps existing call sites working).
+function pivotLine(pivotDate, label, color = WARN) {
+  return pivotLines({ date: pivotDate, label, color });
 }
 
 async function load() {
@@ -482,6 +488,7 @@ async function load() {
       hovertemplate: "%{x|%b %d}<br>%{y:.1f} msgs/user<extra></extra>",
     }], layout({
       yaxis: { title: "Messages per AI user", automargin: true },
+      ...pivotLine(PIVOT_PROMO, "Jul 15", PROMO_COLOR),
     }), config);
 
     // === BEFORE vs AFTER MARCH 30 ===
@@ -556,7 +563,9 @@ async function load() {
       type: "scatter", mode: "lines+markers",
       line: { color: BRAND, width: 2.4 }, marker: { size: 4 },
       hovertemplate: "%{x|%b %d}<br>%{y:.1f} videos/user<extra></extra>",
-    }], layout({ margin: { l: 50, r: 30, t: 40, b: 50 }, ...pivotLine(PIVOT, "Mar 30") }), config);
+    }], layout({ margin: { l: 50, r: 30, t: 40, b: 50 },
+                 ...pivotLines({ date: PIVOT, label: "Mar 30" },
+                               { date: PIVOT_PROMO, label: "Jul 15", color: PROMO_COLOR }) }), config);
 
     // Completion rate trend
     Plotly.newPlot("chart-completion-trend", [{
@@ -567,7 +576,8 @@ async function load() {
     }], layout({
       margin: { l: 50, r: 30, t: 40, b: 50 },
       yaxis: { gridcolor: "#f3f4f6", tickfont: { color: "#6b7280" }, ticksuffix: "%", automargin: true },
-      ...pivotLine(PIVOT, "Mar 30"),
+      ...pivotLines({ date: PIVOT, label: "Mar 30" },
+                    { date: PIVOT_PROMO, label: "Jul 15", color: PROMO_COLOR }),
     }), config);
 
     // === PLAYLIST DEPTH ===
@@ -658,7 +668,8 @@ async function load() {
         marker: { color: "#f59e0b", size: 8, symbol: "diamond" },
         hovertemplate: "%{x|%a %b %d}<br>%{y:.1f} vids/user<extra>Weekend</extra>" },
     ], layout({ showlegend: true, legend: { orientation: "h", y: 1.1, x: 0 },
-                yaxis: { title: "Videos / user", automargin: true } }), config);
+                yaxis: { title: "Videos / user", automargin: true },
+                ...pivotLine(PIVOT_PROMO, "Jul 15", PROMO_COLOR) }), config);
 
     // Weekday vs weekend scatter: completion rate
     Plotly.newPlot("chart-daytype-cr", [
@@ -671,7 +682,8 @@ async function load() {
         marker: { color: "#f59e0b", size: 8, symbol: "diamond" },
         hovertemplate: "%{x|%a %b %d}<br>%{y:.1f}%<extra>Weekend</extra>" },
     ], layout({ showlegend: true, legend: { orientation: "h", y: 1.1, x: 0 },
-                yaxis: { title: "Completion %", ticksuffix: "%", automargin: true } }), config);
+                yaxis: { title: "Completion %", ticksuffix: "%", automargin: true },
+                ...pivotLine(PIVOT_PROMO, "Jul 15", PROMO_COLOR) }), config);
 
     // === PROGRAM PERFORMANCE ===
     const mainProgs = programs.filter(p => p.starts >= 10);
@@ -718,7 +730,8 @@ async function load() {
     Plotly.newPlot("chart-program-trend", progTraces, layout({
       showlegend: true, legend: { orientation: "h", y: 1.08, x: 0 },
       margin: { l: 50, r: 30, t: 40, b: 50 },
-      ...pivotLine(PIVOT, "Mar 30 playlist"),
+      ...pivotLines({ date: PIVOT, label: "Mar 30 playlist" },
+                    { date: PIVOT_PROMO, label: "Jul 15", color: PROMO_COLOR }),
     }), config);
 
     // === BBD LAUNCH — SINCE MARCH 16 ===
