@@ -274,6 +274,53 @@
   </div>
 </div>
 
+<h2>How to read this dashboard</h2>
+<div class="grid">
+  <div class="card" style="grid-column: 1 / -1;">
+    <h3>The two benchmark lines</h3>
+    <p style="font-size:13px; line-height:1.6; margin:0 0 12px;">
+      Several time-charts carry vertical dashed lines that mark the two moments we changed
+      the daily workout. They let you see, at a glance, whether a change moved the numbers.
+    </p>
+    <div style="display:flex; flex-direction:column; gap:10px; font-size:13px; line-height:1.5;">
+      <div style="display:flex; gap:10px; align-items:flex-start;">
+        <span style="flex:0 0 auto; width:34px; border-top:2px dashed #dc2626; margin-top:9px;"></span>
+        <div><strong style="color:#dc2626;">Mar 30 — playlists launched.</strong>
+          We moved from one fixed daily video to a <em>playlist</em> the user could choose from.
+          To the left of this line users had a single video; to the right they had a menu.</div>
+      </div>
+      <div style="display:flex; gap:10px; align-items:flex-start;">
+        <span style="flex:0 0 auto; width:34px; border-top:2px dashed #e91e8c; margin-top:9px;"></span>
+        <div><strong style="color:#e91e8c;">Jul 15 — workout trimmed from 6 videos to 2.</strong>
+          We cut the weekday playlist down to the two main program videos. Watch the charts to the
+          right of this line for the effect: fewer videos on offer, but a tighter, more focused workout.</div>
+      </div>
+    </div>
+    <p class="note">Not every chart is time-based, so the lines only appear on the day-by-day trends (DAU, video sessions, completion, videos-per-user, AI usage, program mix and the weekday/weekend scatters).</p>
+  </div>
+
+  <div class="card">
+    <h3>Reading the key metrics</h3>
+    <ul style="font-size:13px; line-height:1.6; margin:0; padding-left:18px;">
+      <li><strong>DAU (daily active users)</strong> — how many people opened the app and did something that day. <em>Avg DAU</em> smooths that over the whole window.</li>
+      <li><strong>Video starts vs. completes</strong> — a "start" is pressing play; a "complete" is watching to the end. The gap between them is where people drop off.</li>
+      <li><strong>Completion rate</strong> — completes ÷ starts. Higher means the content is holding attention. Trimming to 2 videos (Jul 15) is expected to lift this.</li>
+      <li><strong>Videos per user</strong> — how many videos the average active person watches in a day. This is the metric the 6→2 change most directly affects.</li>
+      <li><strong>AI messages / AI adoption</strong> — how many people chat with the AI guide and how often. "% of DAU" is the share of active users who sent at least one message.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Reading the graphs</h3>
+    <ul style="font-size:13px; line-height:1.6; margin:0; padding-left:18px;">
+      <li><strong>Funnel (25% → 100%)</strong> — each bar is how far people got through a video. A steep drop-off after 25% means openings that don't stick.</li>
+      <li><strong>Videos-per-user &amp; completion trends</strong> — carry both benchmark lines, so you can compare the single-video era, the playlist era, and the trimmed 2-video era side by side.</li>
+      <li><strong>Program mix (stacked area &amp; donut)</strong> — which programs (SFT, BBD, A&amp;S…) people actually watch. See the legend above for the short codes.</li>
+      <li><strong>Weekday vs. weekend scatters</strong> — each dot is one day. Weekday playlists ran longer (6 videos) than weekend (4), which is why the two clouds sit apart.</li>
+    </ul>
+  </div>
+</div>
+
 <script>
 const URL_  = "https://kddfedrklpavwjjdenor.supabase.co";
 const KEY   = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtkZGZlZHJrbHBhdndqamRlbm9yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5OTQyNjAsImV4cCI6MjA5MzU3MDI2MH0.ErAHkeM09KJb-yo0tstRcyttQeZHMkxlT66UKr3pmHg";

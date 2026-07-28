@@ -387,5 +387,68 @@ async function build() {
 
 build().catch(e => console.error(e));
 </script>
+<script>
+/* Jul 15 benchmark (weekday workout: 6 videos -> 2 main program videos).
+   Auto-adds a dashed marker to every date-axis chart on the slide, then
+   writes a one-sentence explanation into the footer. Leaves any existing
+   Mar 30 line untouched (de-duped by x0). Skips signups (acquisition). */
+(function () {
+  var MARK = { date: "2026-07-15", label: "Jul 15", color: "#f472b6" };
+  var SKIP = { "s9-chart2": 1 };
+  var drew = false;
+
+  function mark() {
+    document.querySelectorAll(".js-plotly-plot").forEach(function (gd) {
+      if (SKIP[gd.id] || gd.__jul15) return;
+      var xs = [];
+      (gd.data || []).forEach(function (t) {
+        if (t.x) t.x.forEach(function (v) { if (v != null) xs.push(String(v)); });
+      });
+      if (!xs.length) return;
+      xs.sort();
+      if (!/^\d{4}-\d{2}-\d{2}/.test(xs[0])) return;                 // date axes only
+      if (MARK.date < xs[0] || MARK.date > xs[xs.length - 1]) { gd.__jul15 = true; return; }
+      var have = (gd.layout && gd.layout.shapes) || [];
+      if (have.some(function (s) { return s.x0 === MARK.date; })) { gd.__jul15 = true; return; }
+      gd.__jul15 = true; drew = true;
+      Plotly.relayout(gd, {
+        shapes: have.concat([{ type: "line", x0: MARK.date, x1: MARK.date, y0: 0, y1: 1,
+                               yref: "paper", line: { color: MARK.color, width: 2, dash: "dash" } }]),
+        annotations: ((gd.layout && gd.layout.annotations) || []).concat([{
+          x: MARK.date, y: 1.05, yref: "paper", text: MARK.label, showarrow: false,
+          font: { size: 12, color: MARK.color }, yanchor: "bottom", xanchor: "left" }])
+      });
+    });
+    if (drew) addCaption();
+  }
+
+  function addCaption() {
+    if (document.getElementById("jul15-note")) return;
+    var txt = "Jul 15 benchmark: the weekday workout was trimmed from 6 videos to only the 2 main program videos.";
+    var foot = document.querySelectorAll(".footer-note");
+    if (foot.length) {
+      var s = document.createElement("div");
+      s.id = "jul15-note";
+      s.style.cssText = "margin-top:6px;color:#f472b6;font-size:0.85em;line-height:1.4;";
+      s.textContent = txt;
+      foot[foot.length - 1].appendChild(s);
+    } else {
+      var d = document.createElement("div");
+      d.id = "jul15-note";
+      d.textContent = txt;
+      d.style.cssText = "position:fixed;left:0;right:0;bottom:0;padding:6px 14px;" +
+        "background:rgba(15,23,42,0.9);color:#f472b6;text-align:center;z-index:9999;" +
+        "font:12px/1.4 -apple-system,system-ui,sans-serif;";
+      document.body.appendChild(d);
+    }
+  }
+
+  var n = 0, t = setInterval(function () {
+    n++;
+    if (document.querySelectorAll(".js-plotly-plot").length) mark();
+    if (n >= 25) { clearInterval(t); mark(); }
+  }, 300);
+})();
+</script>
 </body>
 </html>
