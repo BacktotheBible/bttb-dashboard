@@ -207,7 +207,7 @@
 <div class="kpis" id="email-kpis"></div>
 <div class="grid">
   <div class="card" style="grid-column: 1 / -1;">
-    <h3>Open, click &amp; click-to-open rate over time</h3>
+    <h3>Open, click &amp; click-through rate over time</h3>
     <div id="chart-email-rates" class="chart" style="height: 340px;"></div>
   </div>
   <div class="card" style="grid-column: 1 / -1;"><h3>Weekday vs weekend</h3><div id="table-email-daytype"></div></div>
@@ -1055,7 +1055,7 @@ async function loadEmail(fromVal, toVal) {
       { label: "Delivered",    value: fmt(delivered),           sub: `${fmt(suppressed)} suppressed · ${fmt(bounces)} bounced` },
       { label: "Open rate",    value: pct(uopens, delivered) + "%",  sub: `${fmt(uopens)} opened` },
       { label: "Click rate",   value: pct(uclicks, delivered) + "%", sub: `${fmt(uclicks)} clicked` },
-      { label: "Click-to-open", value: pct(uclicks, uopens) + "%",   sub: "of openers clicked" },
+      { label: "Click-through rate", value: pct(uclicks, uopens) + "%",   sub: "of openers clicked" },
     ];
     document.getElementById("email-kpis").innerHTML = kpis.map(k =>
       `<div class="kpi"><div class="label">${k.label}</div>
@@ -1068,7 +1068,7 @@ async function loadEmail(fromVal, toVal) {
         y: daily.map(r => r.open_rate), line: { color: BRAND, width: 2 } },
       { type: "scatter", mode: "lines", name: "Click rate", x: days,
         y: daily.map(r => r.click_rate), line: { color: ACCENT, width: 2 } },
-      { type: "scatter", mode: "lines", name: "Click-to-open", x: days,
+      { type: "scatter", mode: "lines", name: "Click-through rate", x: days,
         y: daily.map(r => r.ctor), line: { color: WARN, width: 2, dash: "dot" } },
     ], layout({ showlegend: true, legend: { orientation: "h", y: 1.15, x: 0 },
                 yaxis: { ticksuffix: "%", gridcolor: "#f3f4f6",
@@ -1088,7 +1088,7 @@ async function loadEmail(fromVal, toVal) {
     document.getElementById("table-email-daytype").innerHTML =
       `<table class="wkd-table"><thead><tr><th>Day type</th><th class="num">Sends</th>
         <th class="num">Delivered</th><th class="num">Open</th><th class="num">Click</th>
-        <th class="num">C2O</th></tr></thead><tbody>
+        <th class="num">CTR</th></tr></thead><tbody>
         ${we.sends ? row("Weekend", we) : ""}${wd.sends ? row("Weekday", wd) : ""}</tbody></table>`;
 
     document.getElementById("email-note").innerHTML =
