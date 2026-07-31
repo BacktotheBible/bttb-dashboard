@@ -214,15 +214,12 @@
 </div>
 <p id="email-note" style="font-size:12px;color:var(--muted);margin-top:8px;"></p>
 
-<h2>Playlist change impact — before vs after March 30</h2>
-<div id="era-compare"></div>
+<h2>Workout format evolution — single → 6 videos → 2 videos</h2>
+<div id="era-evolution"></div>
 <div class="grid" style="margin-top: 14px;">
   <div class="card"><h3>Videos per active user per day</h3><div id="chart-depth" class="chart"></div></div>
   <div class="card"><h3>Daily completion rate</h3><div id="chart-completion-trend" class="chart"></div></div>
 </div>
-
-<h2>Workout format evolution — single → 6 videos → 2 videos</h2>
-<div id="era-evolution"></div>
 
 <h2>Playlist depth — how deep do users go?</h2>
 <div class="grid">
@@ -548,71 +545,15 @@ async function load() {
       ...pivotLines({ date: PIVOT_PLAY, label: "Mar 30" }, { date: PIVOT_PROMO, label: "Jul 15", color: PROMO_COLOR }),
     }), config);
 
-    // === BEFORE vs AFTER MARCH 30 ===
+    // === Format-era pivots (used by the evolution tiles + the two trend charts below) ===
     const PIVOT = "2026-03-30";
-    const before = depth.filter(r => r.day < PIVOT);
-    const after  = depth.filter(r => r.day >= PIVOT);
     const avg = (arr, key) => arr.length ? (arr.reduce((s, r) => s + Number(r[key] || 0), 0) / arr.length) : 0;
 
-    const bVPU = avg(before, "videos_per_user").toFixed(2);
-    const aVPU = avg(after, "videos_per_user").toFixed(2);
-    const bCR  = avg(before, "completion_pct").toFixed(1);
-    const aCR  = avg(after, "completion_pct").toFixed(1);
-    const bStarts = before.reduce((s, r) => s + Number(r.total_starts), 0);
-    const aStarts = after.reduce((s, r) => s + Number(r.total_starts), 0);
-    const bStartsPerDay = before.length ? (bStarts / before.length).toFixed(0) : 0;
-    const aStartsPerDay = after.length ? (aStarts / after.length).toFixed(0) : 0;
-
+    // Shared delta helper (also used by the Weekday vs weekend table below).
     const deltaPct = (a, b) => {
       const d = b > 0 ? Math.round(100 * (a - b) / b) : 0;
       return d >= 0 ? `<span class="delta up">+${d}%</span>` : `<span class="delta down">${d}%</span>`;
     };
-
-    document.getElementById("era-compare").innerHTML = `
-      <div class="compare-grid">
-        <div class="compare-card">
-          <h4>Videos per active user / day</h4>
-          <div class="era-row">
-            <div><div class="era-label">Before<br>(single video)</div>
-              <div class="era-value">${bVPU}</div>
-              <div class="meta">${before.length} days</div></div>
-            <div><div class="era-label">After<br>(playlist choice)</div>
-              <div class="era-value" style="color:var(--accent)">${aVPU}</div>
-              <div class="meta">${after.length} days</div></div>
-          </div>
-          ${deltaPct(aVPU, bVPU)}
-        </div>
-        <div class="compare-card">
-          <h4>Avg completion rate</h4>
-          <div class="era-row">
-            <div><div class="era-label">Before</div>
-              <div class="era-value">${bCR}%</div></div>
-            <div><div class="era-label">After</div>
-              <div class="era-value" style="color:var(--accent)">${aCR}%</div></div>
-          </div>
-          ${deltaPct(aCR, bCR)}
-        </div>
-        <div class="compare-card">
-          <h4>Avg daily video starts</h4>
-          <div class="era-row">
-            <div><div class="era-label">Before</div>
-              <div class="era-value">${bStartsPerDay}</div></div>
-            <div><div class="era-label">After</div>
-              <div class="era-value" style="color:var(--accent)">${aStartsPerDay}</div></div>
-          </div>
-          ${deltaPct(aStartsPerDay, bStartsPerDay)}
-        </div>
-        <div class="compare-card">
-          <h4>Total video starts</h4>
-          <div class="era-row">
-            <div><div class="era-label">Before<br>(${before.length} days)</div>
-              <div class="era-value">${fmt(bStarts)}</div></div>
-            <div><div class="era-label">After<br>(${after.length} days)</div>
-              <div class="era-value" style="color:var(--accent)">${fmt(aStarts)}</div></div>
-          </div>
-          ${deltaPct(aStarts / Math.max(after.length,1), bStarts / Math.max(before.length,1))}
-        </div>
-      </div>`;
 
     // === WORKOUT FORMAT EVOLUTION — single → 6 videos → 2 videos ===
     // Three adjacent eras split on the two workout changes (Mar 30, Jul 15).
