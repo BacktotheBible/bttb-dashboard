@@ -2,7 +2,7 @@ name: Blog sync (Wix -> Airtable)
 
 on:
   schedule:
-    - cron: "17 13 * * *"   # ~08:17 America/Chicago daily
+    - cron: "17 13 * * 1"   # ~08:17 America/Chicago Mondays (07:17 during CST)
   workflow_dispatch:
     inputs:
       mode:
