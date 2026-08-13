@@ -1032,7 +1032,7 @@ async function loadTopics(fromVal, toVal) {
     document.getElementById("topic-combos").innerHTML =
       `<table><thead><tr><th>Combination</th><th class="num">Asks</th><th class="num">People</th></tr></thead>
        <tbody>${combos.map(c =>
-         `<tr><td>${c.combination}</td><td class="num">${c.asks}</td><td class="num">${c.people}</td></tr>`).join("")}</tbody></table>`;
+         `<tr><td>${String(c.combination??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}</td><td class="num">${c.asks}</td><td class="num">${c.people}</td></tr>`).join("")}</tbody></table>`;
 
     document.getElementById("topic-note").innerHTML =
       (btn ? `&ldquo;Growing spiritually&rdquo; (${btn.asks} asks) is a one-click button in the interface, live since Apr 27 2026 &mdash; a single click, not a typed struggle, so it is shown separately from the dimensions above. ` : "") +
