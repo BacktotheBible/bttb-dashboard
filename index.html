@@ -154,6 +154,19 @@
     .wkd-table td { padding: 5px 3px; }
   }
 </style>
+<style id="respcards">
+@media (max-width:560px){
+  table.resp, table.resp thead, table.resp tbody, table.resp tr, table.resp td{display:block}
+  table.resp{width:100%!important;min-width:0!important}
+  table.resp thead{display:none}
+  table.resp tr{border:1px solid #e6e8ee;border-radius:11px;background:#fff;padding:4px 13px 8px;margin-bottom:10px}
+  table.resp td{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:7px 0;border:none;border-bottom:1px solid #f0f2f6;white-space:normal;text-align:right;font-size:13.5px}
+  table.resp td:last-child{border-bottom:none}
+  table.resp td::before{content:attr(data-label);color:#6b7280;font-weight:700;font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;text-align:left;flex:0 0 auto;padding-right:10px}
+  table.resp td:first-child{text-align:left;font-weight:800;color:#171f3b;font-size:14.5px;padding:6px 0 8px;border-bottom:2px solid #e6e8ee}
+  table.resp td:first-child::before{display:none}
+}
+</style>
 </head>
 <body>
 
@@ -1103,6 +1116,27 @@ async function loadEmail(fromVal, toVal) {
 }
 
 load();
+</script>
+<script>
+/* Responsive tables: on phones, turn each table into stacked label:value cards.
+   Reads <thead> headers → sets each cell's data-label; the CSS above does the rest.
+   Re-runs when tables re-render (data loads async). */
+(function(){
+  function labelize(){
+    document.querySelectorAll('table').forEach(function(tbl){
+      var ths=tbl.querySelectorAll('thead th');
+      if(!ths.length) ths=tbl.querySelectorAll('tr:first-child th');
+      if(!ths.length) return;
+      var heads=[].map.call(ths,function(th){return th.textContent.trim();});
+      tbl.classList.add('resp');
+      tbl.querySelectorAll('tbody tr').forEach(function(tr){
+        [].forEach.call(tr.children,function(td,i){ td.setAttribute('data-label',heads[i]||''); });
+      });
+    });
+  }
+  labelize();
+  try{ new MutationObserver(labelize).observe(document.body,{childList:true,subtree:true}); }catch(e){}
+})();
 </script>
 </body>
 </html>
