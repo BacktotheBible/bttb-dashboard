@@ -35,54 +35,59 @@ h1{font-size:64px; line-height:.98; font-weight:800; letter-spacing:-.02em}
 .hint{font-size:22px; color:var(--muted); text-align:right; line-height:1.25}
 .hint b{color:var(--accent); font-weight:700}
 
-/* filters */
-.filters{margin-top:22px}
-.fcat{margin-bottom:15px}
-.fcat .flab{font-size:21px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; margin-bottom:9px}
+/* filters (bottom, reachable zone) */
+.filters{margin-top:auto; border-top:3px solid var(--line-strong); padding-top:20px}
+.filters .ftitle{font-size:25px; font-weight:800; letter-spacing:-.01em; color:var(--ink); margin-bottom:13px}
+.fcat{margin-bottom:11px}
+.fcat .flab{font-size:21px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; margin-bottom:7px}
 .chips{display:flex; flex-wrap:wrap; gap:11px}
-.chip{font-size:24px; font-weight:600; padding:13px 22px; border-radius:999px; background:var(--surface-2);
+.chip{font-size:24px; font-weight:600; padding:11px 21px; border-radius:999px; background:var(--surface-2);
   border:2px solid var(--line-strong); color:var(--ink); cursor:pointer; transition:transform .06s}
 .chip:active{transform:scale(.95)}
 .chip.on{background:var(--chipon); border-color:var(--chipon); color:#fff}
 :root[data-theme="dark"] .chip.on{color:#12100b}
 .reset{font-size:20px; font-weight:650; padding:11px 20px; border-radius:999px; background:transparent;
   border:2px dashed var(--line-strong); color:var(--muted); cursor:pointer}
+.dsec{margin-top:14px; padding-top:16px; border-top:2px dashed var(--line-strong)}
+.dsec .ftitle{margin-bottom:12px}
+.detail-btns{display:flex; flex-wrap:wrap; gap:11px}
+.dbtn{font-size:23px; font-weight:700; padding:12px 22px; border-radius:14px; background:var(--surface-2);
+  border:2px solid var(--accent); color:var(--accent); cursor:pointer; transition:transform .06s}
+.dbtn:active{transform:scale(.95); background:var(--accent); color:#fff}
+:root[data-theme="dark"] .dbtn:active{color:#12100b}
 
 /* readout */
 .readout{display:flex; align-items:center; gap:26px; background:var(--surface); border:1px solid var(--line);
-  border-radius:16px; padding:18px 28px; margin:8px 0 16px}
-.readout .n{font-size:52px; font-weight:800; color:var(--accent); letter-spacing:-.02em; line-height:.9}
-.readout .nlab{font-size:20px; color:var(--muted); line-height:1.2}
+  border-radius:16px; padding:13px 28px; margin:6px 0 11px}
+.readout .n{font-size:46px; font-weight:800; color:var(--accent); letter-spacing:-.02em; line-height:.9}
+.readout .nlab{font-size:19px; color:var(--muted); line-height:1.2}
 .readout .comp{margin-left:auto; text-align:right}
-.readout .comp .cv{font-size:52px; font-weight:800; letter-spacing:-.02em; line-height:.9}
-.readout .comp .clab{font-size:19px; color:var(--muted); text-transform:uppercase; letter-spacing:.08em}
+.readout .comp .cv{font-size:46px; font-weight:800; letter-spacing:-.02em; line-height:.9}
+.readout .comp .clab{font-size:18px; color:var(--muted); text-transform:uppercase; letter-spacing:.08em}
 
-/* scorecard */
-.cards{flex:1; display:flex; flex-direction:column; gap:12px}
-.dim{background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:16px 24px; cursor:pointer; position:relative}
-.dim:active{background:var(--surface-2)}
+/* scorecard (top, view) */
+.cards{display:flex; flex-direction:column; gap:9px; margin-top:10px}
+.dim{background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:10px 22px; position:relative}
 .dim .top{display:flex; align-items:baseline; gap:14px}
-.dim .nm{font-size:29px; font-weight:750; letter-spacing:-.01em}
-.dim .val{margin-left:auto; font-size:38px; font-weight:800; color:var(--accent); letter-spacing:-.02em; line-height:1}
-.dim .val small{font-size:19px; color:var(--muted); font-weight:600}
-.dim .meter{position:relative; height:20px; background:var(--track); border-radius:7px; overflow:hidden; margin-top:11px}
-.dim .fill{position:absolute; inset:0 auto 0 0; background:linear-gradient(90deg,var(--accent-2),var(--accent)); border-radius:7px; transition:width .35s cubic-bezier(.4,0,.2,1)}
+.dim .nm{font-size:27px; font-weight:750; letter-spacing:-.01em}
+.dim .val{margin-left:auto; font-size:33px; font-weight:800; color:var(--accent); letter-spacing:-.02em; line-height:1}
+.dim .val small{font-size:17px; color:var(--muted); font-weight:600}
+.dim .meter{position:relative; height:16px; background:var(--track); border-radius:6px; overflow:hidden; margin-top:8px}
+.dim .fill{position:absolute; inset:0 auto 0 0; background:linear-gradient(90deg,var(--accent-2),var(--accent)); border-radius:6px; transition:width .35s cubic-bezier(.4,0,.2,1)}
 .dim .tick{position:absolute; top:0; bottom:0; width:2px; background:var(--bg); opacity:.5}
-.dim .sub{display:flex; align-items:center; gap:14px; margin-top:9px}
-.dim .pill{font-size:19px; font-weight:700; padding:3px 12px; border-radius:999px; background:var(--amber-soft); color:var(--amber)}
-.dim .go{margin-left:auto; font-size:20px; color:var(--muted); font-weight:650}
+.dim .sub{display:flex; align-items:center; gap:14px; margin-top:7px}
+.dim .pill{font-size:18px; font-weight:700; padding:3px 12px; border-radius:999px; background:var(--amber-soft); color:var(--amber)}
 
-footer{margin-top:14px; padding-top:12px; border-top:1px solid var(--line); display:flex; justify-content:space-between; align-items:baseline}
+footer{margin-top:10px; padding-top:9px; border-top:1px solid var(--line); display:flex; justify-content:space-between; align-items:baseline}
 footer .src{font-size:17px; color:var(--muted)} footer .src b{color:var(--ink)}
 footer .big{font-size:19px; color:var(--accent); font-weight:700; text-transform:uppercase; letter-spacing:.1em}
 
 /* overlay */
 #ov{position:absolute; inset:0; background:var(--bg); display:none; flex-direction:column; padding:52px 70px; z-index:20}
 #ov.show{display:flex}
-#ov .ohead{display:flex; align-items:flex-start; justify-content:space-between; gap:20px}
-#ov .otitle{font-size:52px; font-weight:800; letter-spacing:-.02em; line-height:1.0; max-width:16ch}
-#ov .oclose{flex:none; width:84px; height:84px; border-radius:50%; border:2px solid var(--line-strong);
-  background:var(--surface); color:var(--ink); font-size:44px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center}
+#ov .otitle{font-size:52px; font-weight:800; letter-spacing:-.02em; line-height:1.0; max-width:22ch}
+#ov .oclose{margin-top:20px; width:100%; height:104px; border-radius:18px; border:2px solid var(--line-strong);
+  background:var(--surface); color:var(--ink); font-size:36px; font-weight:750; cursor:pointer}
 #ov .oclose:active{background:var(--surface-2)}
 #ov .ometa{font-size:24px; color:var(--muted); margin-top:12px}
 #ov .ometa b{color:var(--accent); font-weight:700}
@@ -100,9 +105,7 @@ footer .big{font-size:19px; color:var(--accent); font-weight:700; text-transform
 <div id="stage">
   <div class="eyebrow">SALT for Oral Cultures &middot; Kenya</div>
   <div class="hrow"><h1>Explore the Data</h1>
-    <div class="hint">Tap to filter by <b>who answered</b>.<br>Tap a dimension for detail.</div></div>
-
-  <div class="filters" id="filters"></div>
+    <div class="hint">See how different people answered.<br>Use the buttons below &#8595;</div></div>
 
   <div class="readout">
     <div><div class="n mono" id="rn">0</div><div class="nlab">people<br>match</div></div>
@@ -111,17 +114,20 @@ footer .big{font-size:19px; color:var(--accent); font-weight:700; text-transform
 
   <div class="cards" id="cards"></div>
 
+  <div class="filters" id="filters"><div class="ftitle">1 &middot; Filter by who answered</div></div>
+
   <footer>
     <div class="src"><b>SALT for Oral Cultures</b> &middot; Back to the Bible &middot; 1,787 respondents &middot; scale 1 (not at all)&ndash;5 (very much)</div>
     <div class="big">Touch to explore</div>
   </footer>
 
   <div id="ov">
-    <div class="ohead"><div class="otitle" id="ovt"></div><button class="oclose" id="ovx">&times;</button></div>
+    <div class="otitle" id="ovt"></div>
     <div class="ometa" id="ovm"></div>
     <div class="odist" id="ovd"></div>
     <div class="odcap"><span>&#9632; not at all</span><span>response spread (this group)</span><span>very much &#9632;</span></div>
     <div class="oitems" id="ovi"></div>
+    <button class="oclose" id="ovx">Close &times;</button>
   </div>
 </div>
 
@@ -146,6 +152,15 @@ CATS.forEach(([key,label])=>{
 const rd=document.createElement('button'); rd.className='reset'; rd.textContent='Reset  \u21ba  show everyone';
 rd.onclick=()=>{Object.values(state).forEach(s=>s.clear());syncChips();render();};
 fw.appendChild(rd);
+
+// detail buttons (open a dimension's statement-level breakdown from the reachable zone)
+const dsec=document.createElement('div'); dsec.className='dsec';
+dsec.innerHTML='<div class="ftitle">2 &middot; Tap a topic to see its statements</div><div class="detail-btns"></div>';
+fw.appendChild(dsec);
+const SHORT=['Core Beliefs','Faith Practice','Scripture','Transformation','Community','Discipleship'];
+const dbw=dsec.querySelector('.detail-btns');
+D.subs.forEach((name,si)=>{const b=document.createElement('button'); b.className='dbtn'; b.textContent=SHORT[si];
+  b.onclick=()=>openOverlay(si); dbw.appendChild(b);});
 
 fw.querySelectorAll('.chip').forEach(ch=>ch.onclick=()=>{
   const k=ch.dataset.k, i=+ch.dataset.i;
@@ -202,10 +217,8 @@ function render(){
     return '<div class="dim" data-si="'+d.si+'"><div class="top"><span class="nm">'+d.name+'</span>'+
       '<span class="val mono">'+(d.n?d.mean.toFixed(2):'\u2014')+'<small> /5</small></span></div>'+
       '<div class="meter"><div class="fill" style="width:'+(d.n?pos(d.mean):0)+'%"></div>'+ticks+'</div>'+
-      '<div class="sub"><span class="pill">'+(d.n?Math.round(d.high)+'% rated 4\u20135':'no data')+'</span>'+
-      '<span class="go">tap for detail \u203a</span></div></div>';
+      '<div class="sub"><span class="pill">'+(d.n?Math.round(d.high)+'% rated 4\u20135':'no data')+'</span></div></div>';
   }).join('');
-  cardsEl.querySelectorAll('.dim').forEach(el=>el.onclick=()=>openOverlay(+el.dataset.si));
 }
 
 /* overlay */

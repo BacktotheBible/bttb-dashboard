@@ -1,0 +1,136 @@
+<title>Kenya &#183; Spiritual Growth Scorecard</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{
+  --bg:#F1EDE4; --surface:#FBF9F4; --surface-2:#F3EFE6; --ink:#201D16; --muted:#726A59;
+  --line:#E4DDD0; --line-strong:#D6CCBA;
+  --accent:#2F6B4E; --accent-2:#1F5238; --amber:#B0741A; --amber-soft:#F2E6CD;
+  --track:#E7E1D4;
+  --s1:#DCE7DE; --s2:#AECFB7; --s3:#7CB490; --s4:#4C9670; --s5:#22623F;
+}
+:root[data-theme="dark"]{
+  --bg:#141109; --surface:#1E1A13; --surface-2:#241F17; --ink:#EEE9DE; --muted:#A79E8D;
+  --line:#322B21; --line-strong:#463D2E; --accent:#5CAE83; --accent-2:#7CC698;
+  --amber:#D69A3C; --amber-soft:#3A2E19; --track:#2A2419;
+  --s1:#2C382F; --s2:#3B5946; --s3:#4E7E5E; --s4:#61A67C; --s5:#7CC698;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#141109; --surface:#1E1A13; --surface-2:#241F17; --ink:#EEE9DE; --muted:#A79E8D;
+  --line:#322B21; --line-strong:#463D2E; --accent:#5CAE83; --accent-2:#7CC698;
+  --amber:#D69A3C; --amber-soft:#3A2E19; --track:#2A2419;
+  --s1:#2C382F; --s2:#3B5946; --s3:#4E7E5E; --s4:#61A67C; --s5:#7CC698;
+}}
+*{box-sizing:border-box; margin:0; padding:0}
+html,body{width:100%; height:100%; background:var(--bg); overflow:hidden}
+body{display:flex; align-items:center; justify-content:center;
+  font-family:"Segoe UI Variable Text","Segoe UI",system-ui,-apple-system,Roboto,sans-serif; color:var(--ink)}
+.mono{font-family:"Cascadia Code","Cascadia Mono",Consolas,ui-monospace,"SF Mono",Menlo,monospace; font-variant-numeric:tabular-nums}
+
+#stage{width:1080px; height:1920px; flex:none; background:var(--bg); position:relative;
+  transform-origin:center center; display:flex; flex-direction:column; padding:52px 76px 42px}
+
+.eyebrow{font-size:24px; text-transform:uppercase; letter-spacing:.22em; color:var(--accent); font-weight:700}
+h1{font-size:74px; line-height:.98; font-weight:800; letter-spacing:-.02em; margin:14px 0 0}
+.sub{font-size:27px; color:var(--muted); margin-top:12px; max-width:30ch; line-height:1.3}
+.sub b{color:var(--ink); font-weight:650}
+
+/* composite hero strip */
+.hero{display:flex; align-items:center; gap:44px; background:var(--surface); border:1px solid var(--line);
+  border-radius:20px; padding:26px 40px; margin:26px 0 6px}
+.hero .num{display:flex; align-items:baseline; gap:4px}
+.hero .num .big{font-size:104px; font-weight:800; line-height:.8; letter-spacing:-.03em; color:var(--accent)}
+.hero .num .den{font-size:40px; font-weight:700; color:var(--muted)}
+.hero .lbl{font-size:22px; text-transform:uppercase; letter-spacing:.1em; color:var(--muted); margin-bottom:8px}
+.hero .meta{font-size:21px; color:var(--muted)}
+.hero .right{flex:1}
+.scaleleg .bar{height:12px; border-radius:6px; background:linear-gradient(90deg,var(--s1),var(--s3),var(--s5))}
+.scaleleg .lab{display:flex; justify-content:space-between; font-size:20px; color:var(--muted); margin-top:9px}
+.scaleleg .lab b{color:var(--ink); font-weight:600}
+
+/* dimension rows */
+.rows{flex:1; display:flex; flex-direction:column; justify-content:space-between; padding-top:20px}
+.dim{}
+.dim .head{display:flex; align-items:baseline; gap:16px}
+.dim .rank{font-size:24px; color:var(--muted); font-weight:700; width:30px}
+.dim .name{font-size:34px; font-weight:750; letter-spacing:-.01em}
+.dim .val{margin-left:auto; font-size:46px; font-weight:800; color:var(--accent); letter-spacing:-.02em; line-height:1}
+.dim .val small{font-size:22px; color:var(--muted); font-weight:600}
+.meter{position:relative; height:30px; background:var(--track); border-radius:8px; overflow:hidden; margin-top:12px}
+.meter .fill{position:absolute; inset:0 auto 0 0; background:linear-gradient(90deg,var(--accent-2),var(--accent)); border-radius:8px}
+.meter .tick{position:absolute; top:0; bottom:0; width:2px; background:var(--bg); opacity:.55}
+.dist{display:flex; height:16px; border-radius:5px; overflow:hidden; margin-top:9px}
+.dist .seg + .seg{box-shadow:inset 1.5px 0 0 var(--bg)}
+.dcap{display:flex; align-items:center; gap:16px; margin-top:10px}
+.pill{font-size:20px; font-weight:700; padding:4px 14px; border-radius:999px; background:var(--amber-soft); color:var(--amber)}
+.dcap .m{font-size:20px; color:var(--muted)}
+
+.insight{background:var(--amber-soft); border-radius:14px; padding:18px 26px; margin-top:8px;
+  font-size:23px; color:var(--ink); line-height:1.35}
+.insight b{color:var(--amber); font-weight:750}
+
+footer{border-top:1px solid var(--line); margin-top:18px; padding-top:14px;
+  display:flex; justify-content:space-between; align-items:baseline; gap:20px}
+footer .src{font-size:19px; color:var(--muted); line-height:1.4; max-width:70ch}
+footer .src b{color:var(--ink); font-weight:600}
+footer .big{font-size:21px; color:var(--accent); font-weight:700; white-space:nowrap; text-transform:uppercase; letter-spacing:.1em}
+</style>
+
+<div id="stage">
+  <div class="eyebrow">SALT for Oral Cultures &middot; Kenya</div>
+  <h1>Spiritual Growth Scorecard</h1>
+  <p class="sub">How Kenyan respondents rate themselves across the <b>six dimensions</b> of Scripture absorption &amp; life transformation.</p>
+
+  <div class="hero">
+    <div class="num"><span class="big mono" id="cv">4.23</span><span class="den mono">/5</span></div>
+    <div class="right">
+      <div class="lbl">Composite score &nbsp;<span class="meta" id="cmeta"></span></div>
+      <div class="scaleleg"><div class="bar"></div>
+        <div class="lab"><span><b>1</b> not at all</span><span><b>3</b> some</span><span><b>5</b> very much</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rows" id="rows"></div>
+
+  <div class="insight" id="insight"></div>
+
+  <footer>
+    <div class="src"><b>Source:</b> SALT for Oral Cultures survey, Back to the Bible, Aug 2026. Each dimension is a respondent&rsquo;s average rating across its statements (1&ndash;5 slider); bars show the full response spread. n = 1,709&ndash;1,787 by dimension.</div>
+    <div class="big">6 dimensions</div>
+  </footer>
+</div>
+
+<script>
+(function(){
+const D={"rows": [{"name": "Core Beliefs", "mean": 4.51, "pct": 86.1, "n": 1787, "dist": {"1": 4.8, "2": 2.0, "3": 7.7, "4": 7.8, "5": 77.6}}, {"name": "Personal Faith Practice", "mean": 4.27, "pct": 74.2, "n": 1760, "dist": {"1": 4.6, "2": 3.7, "3": 15.1, "4": 13.0, "5": 63.6}}, {"name": "Scripture Absorption", "mean": 4.25, "pct": 71.8, "n": 1753, "dist": {"1": 3.6, "2": 3.7, "3": 16.8, "4": 16.2, "5": 59.8}}, {"name": "Life Transformation", "mean": 4.19, "pct": 68.8, "n": 1741, "dist": {"1": 4.7, "2": 4.1, "3": 16.7, "4": 16.9, "5": 57.6}}, {"name": "Activation & Discipleship", "mean": 3.94, "pct": 58.7, "n": 1717, "dist": {"1": 7.1, "2": 6.7, "3": 19.9, "4": 17.7, "5": 48.6}}, {"name": "Community Engagement", "mean": 3.88, "pct": 59.5, "n": 1732, "dist": {"1": 9.7, "2": 6.8, "3": 18.6, "4": 15.9, "5": 49.0}}], "comp": {"mean": 4.23, "sd": 0.79, "n": 1753}};
+const RAMP=['--s1','--s2','--s3','--s4','--s5'];
+const pos=m=>((m-1)/4*100);
+document.getElementById('cv').textContent=D.comp.mean.toFixed(2);
+document.getElementById('cmeta').innerHTML='&nbsp;&middot;&nbsp; &plusmn;'+D.comp.sd.toFixed(2)+' SD &middot; n = '+D.comp.n.toLocaleString();
+
+const wrap=document.getElementById('rows');
+D.rows.forEach((r,i)=>{
+  const ticks=[2,3,4].map(t=>'<span class="tick" style="left:'+pos(t)+'%"></span>').join('');
+  const segs=[1,2,3,4,5].map((k,idx)=>'<div class="seg" style="width:'+(r.dist[k]||0)+'%;background:var('+RAMP[idx]+')"></div>').join('');
+  wrap.insertAdjacentHTML('beforeend',
+   '<div class="dim"><div class="head"><span class="rank mono">'+(i+1)+'</span>'+
+     '<span class="name">'+r.name+'</span>'+
+     '<span class="val mono">'+r.mean.toFixed(2)+'<small> /5</small></span></div>'+
+     '<div class="meter"><div class="fill" style="width:'+pos(r.mean)+'%"></div>'+ticks+'</div>'+
+     '<div class="dist">'+segs+'</div>'+
+     '<div class="dcap"><span class="pill">'+r.pct+'% rated 4&ndash;5</span>'+
+       '<span class="m mono">n '+r.n.toLocaleString()+'</span></div></div>');
+});
+
+const top=D.rows[0], low=D.rows[D.rows.length-1], low2=D.rows[D.rows.length-2];
+document.getElementById('insight').innerHTML=
+  '<b>Belief runs ahead of practice.</b> Core Beliefs top the scale at '+top.mean.toFixed(2)+
+  ', but the outward-facing dimensions &mdash; '+low2.name+' ('+low2.mean.toFixed(2)+') and '+
+  low.name+' ('+low.mean.toFixed(2)+') &mdash; trail furthest behind.';
+
+function fit(){const s=document.getElementById('stage');
+  s.style.transform='scale('+Math.min(innerWidth/1080,innerHeight/1920)+')';}
+addEventListener('resize',fit); fit();
+})();
+</script>

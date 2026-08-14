@@ -1,0 +1,119 @@
+<title>Kenya · Who We Heard From</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{
+  --bg:#F1EDE4; --surface:#FBF9F4; --surface-2:#F3EFE6; --ink:#201D16; --muted:#726A59;
+  --line:#E4DDD0; --line-strong:#D6CCBA;
+  --accent:#2F6B4E; --accent-2:#1F5238; --amber:#B0741A; --amber-soft:#F2E6CD;
+  --track:#E7E1D4;
+}
+:root[data-theme="dark"]{
+  --bg:#141109; --surface:#1E1A13; --surface-2:#241F17; --ink:#EEE9DE; --muted:#A79E8D;
+  --line:#322B21; --line-strong:#463D2E;
+  --accent:#5CAE83; --accent-2:#7CC698; --amber:#D69A3C; --amber-soft:#3A2E19;
+  --track:#2A2419;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#141109; --surface:#1E1A13; --surface-2:#241F17; --ink:#EEE9DE; --muted:#A79E8D;
+  --line:#322B21; --line-strong:#463D2E;
+  --accent:#5CAE83; --accent-2:#7CC698; --amber:#D69A3C; --amber-soft:#3A2E19;
+  --track:#2A2419;
+}}
+*{box-sizing:border-box; margin:0; padding:0}
+html,body{width:100%; height:100%; background:var(--bg); overflow:hidden}
+body{display:flex; align-items:center; justify-content:center;
+  font-family:"Segoe UI Variable Text","Segoe UI",system-ui,-apple-system,Roboto,sans-serif; color:var(--ink)}
+.mono{font-family:"Cascadia Code","Cascadia Mono",Consolas,ui-monospace,"SF Mono",Menlo,monospace; font-variant-numeric:tabular-nums}
+
+/* fixed portrait signage stage, scaled to fit the display */
+#stage{width:1080px; height:1920px; flex:none; background:var(--bg); position:relative;
+  transform-origin:center center; display:flex; flex-direction:column;
+  padding:52px 76px 42px}
+
+/* header */
+.eyebrow{font-size:24px; text-transform:uppercase; letter-spacing:.22em; color:var(--accent); font-weight:700}
+h1{font-size:74px; line-height:.98; font-weight:800; letter-spacing:-.02em; margin:14px 0 0}
+.sub{font-size:27px; color:var(--muted); margin-top:12px; max-width:26ch; line-height:1.3}
+.sub b{color:var(--ink); font-weight:650}
+.headrule{height:5px; background:linear-gradient(90deg,var(--accent),transparent); border-radius:3px; margin:20px 0 4px}
+
+/* charts area */
+.charts{flex:1; display:flex; flex-direction:column; justify-content:space-between; padding-top:6px}
+.block{}
+.block h2{font-size:30px; font-weight:750; letter-spacing:-.01em; display:flex; align-items:baseline; gap:14px}
+.block h2 .note{font-size:19px; font-weight:500; color:var(--muted); letter-spacing:0}
+.bars{margin-top:12px; display:flex; flex-direction:column; gap:10px}
+.bar{display:grid; grid-template-columns:360px 1fr 132px; align-items:center; gap:20px}
+.bar .cat{font-size:23px; color:var(--ink); font-weight:550; line-height:1.14}
+.bar .track{height:34px; background:var(--track); border-radius:8px; position:relative; overflow:hidden}
+.bar .fill{position:absolute; inset:0 auto 0 0; background:var(--accent); border-radius:9px; min-width:6px}
+.bar.lead .fill{background:var(--accent-2)}
+.bar.hl .fill{background:var(--amber)}
+.bar .val{text-align:right; font-size:27px; font-weight:750; letter-spacing:-.01em}
+.bar .val .pct{display:block; font-size:18px; color:var(--muted); font-weight:600; margin-top:-2px}
+
+footer{border-top:1px solid var(--line); margin-top:16px; padding-top:14px;
+  display:flex; justify-content:space-between; align-items:baseline; gap:20px}
+footer .src{font-size:20px; color:var(--muted); line-height:1.4; max-width:64ch}
+footer .src b{color:var(--ink); font-weight:600}
+footer .big{font-size:22px; color:var(--accent); font-weight:700; white-space:nowrap; text-transform:uppercase; letter-spacing:.1em}
+</style>
+
+<div id="stage">
+  <div class="eyebrow">SALT for Oral Cultures &middot; Kenya</div>
+  <h1>Who We Heard From</h1>
+  <p class="sub"><b>2,838 people</b> across Kenya shared how they believe, practice, and grow in faith.</p>
+  <div class="headrule"></div>
+
+  <div class="charts" id="charts"></div>
+
+  <footer>
+    <div class="src"><b>Source:</b> SALT for Oral Cultures survey, Back to the Bible, August 2026. Percentages are of those answering each question; religious background allowed multiple selections, so it totals more than 100%.</div>
+    <div class="big">n = 2,838</div>
+  </footer>
+</div>
+
+<script>
+const CHARTS=[
+ {title:"Age", denom:2796, rows:[
+   ["Youth (under 26)",598],["Young Adult (27–40)",1384],
+   ["Middle Aged (41–64)",603],["Elder (65+)",211]]},
+ {title:"Gender", denom:2796, rows:[
+   ["Male",1525],["Female",1263],["Other",8]]},
+ {title:"Where they live", denom:2792, rows:[
+   ["City",2069],["Rural",694],["Not sure",29]]},
+ {title:"Faith identity", denom:2796, note:"how they describe their own practice", rows:[
+   ["Christianity + African traditional",1484,"hl"],["A specific religion",1146],
+   ["Not religious or spiritual",108],["African traditional only",58,"hl"]]},
+ {title:"Religious background", denom:2791, note:"multiple answers allowed", rows:[
+   ["Christian",2669],["African Traditional Religion",379],["Muslim",112],
+   ["Spiritualism / Voodoo",26],["Animist",3]]},
+];
+const nf=n=>n.toLocaleString();
+const el=document.getElementById('charts');
+CHARTS.forEach(c=>{
+  const max=Math.max(...c.rows.map(r=>r[1]));
+  const lead=c.rows.reduce((a,b)=>b[1]>a[1]?b:a)[0];
+  const bars=c.rows.map(r=>{
+    const [cat,val,tag]=r;
+    const cls=tag==='hl'?'hl':(cat===lead?'lead':'');
+    const pct=Math.round(100*val/c.denom);
+    return `<div class="bar ${cls}">
+      <div class="cat">${cat}</div>
+      <div class="track"><div class="fill" style="width:${(val/max*100).toFixed(1)}%"></div></div>
+      <div class="val mono">${nf(val)}<span class="pct">${pct}%</span></div></div>`;
+  }).join('');
+  el.insertAdjacentHTML('beforeend',
+    `<div class="block"><h2>${c.title}${c.note?`<span class="note">${c.note}</span>`:''}</h2>
+     <div class="bars">${bars}</div></div>`);
+});
+
+/* scale the fixed 1080x1920 stage to fit whatever window shows it (kiosk-safe) */
+function fit(){
+  const s=document.getElementById('stage');
+  const k=Math.min(innerWidth/1080, innerHeight/1920);
+  s.style.transform=`scale(${k})`;
+}
+addEventListener('resize',fit); fit();
+</script>
