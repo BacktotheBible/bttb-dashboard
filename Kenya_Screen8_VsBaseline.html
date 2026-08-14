@@ -1,0 +1,121 @@
+<title>Kenya vs. the U.S. Baseline</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{
+  --bg:#F1EDE4; --surface:#FBF9F4; --surface-2:#F3EFE6; --ink:#201D16; --muted:#726A59;
+  --line:#E4DDD0; --line-strong:#D6CCBA; --accent:#2F6B4E; --accent-2:#1F5238;
+  --us:#3E6DA6; --us-2:#2E5586; --amber:#B0741A; --amber-2:#8A5A12; --amber-soft:#F5EAD4; --track:#E7E1D4;
+}
+:root[data-theme="dark"]{
+  --bg:#141109; --surface:#1E1A13; --surface-2:#241F17; --ink:#EEE9DE; --muted:#A79E8D;
+  --line:#322B21; --line-strong:#463D2E; --accent:#5CAE83; --accent-2:#7CC698;
+  --us:#6F9BD4; --us-2:#8FB4E0; --amber:#D69A3C; --amber-2:#E8B25A; --amber-soft:#3A2E19; --track:#2A2419;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#141109; --surface:#1E1A13; --surface-2:#241F17; --ink:#EEE9DE; --muted:#A79E8D;
+  --line:#322B21; --line-strong:#463D2E; --accent:#5CAE83; --accent-2:#7CC698;
+  --us:#6F9BD4; --us-2:#8FB4E0; --amber:#D69A3C; --amber-2:#E8B25A; --amber-soft:#3A2E19; --track:#2A2419;
+}}
+*{box-sizing:border-box; margin:0; padding:0}
+html,body{width:100%; height:100%; background:var(--bg); overflow:hidden}
+body{display:flex; align-items:center; justify-content:center;
+  font-family:"Segoe UI Variable Text","Segoe UI",system-ui,-apple-system,Roboto,sans-serif; color:var(--ink)}
+.mono{font-family:"Cascadia Code","Cascadia Mono",Consolas,ui-monospace,"SF Mono",Menlo,monospace; font-variant-numeric:tabular-nums}
+
+#stage{width:1080px; height:1920px; flex:none; background:var(--bg); position:relative;
+  transform-origin:center center; display:flex; flex-direction:column; padding:50px 76px 40px}
+
+.eyebrow{font-size:24px; text-transform:uppercase; letter-spacing:.22em; color:var(--accent); font-weight:700}
+h1{font-size:70px; line-height:.98; font-weight:800; letter-spacing:-.02em; margin:12px 0 0}
+.sub{font-size:26px; color:var(--muted); margin-top:12px; max-width:34ch; line-height:1.3}
+.legend{display:flex; gap:30px; margin-top:16px}
+.lg{display:flex; align-items:center; gap:11px; font-size:24px; font-weight:650}
+.lg .sw{width:26px; height:26px; border-radius:7px}
+.lg.k .sw{background:var(--accent)} .lg.u .sw{background:var(--us)}
+.lg .n{color:var(--muted); font-size:19px; font-weight:500}
+
+/* composite hero */
+.hero{display:flex; align-items:center; gap:24px; background:var(--surface); border:1px solid var(--line);
+  border-radius:18px; padding:22px 32px; margin:22px 0 6px}
+.hero .hc{text-align:center}
+.hero .hc .hn{font-size:80px; font-weight:800; letter-spacing:-.03em; line-height:.85}
+.hero .hc.k .hn{color:var(--accent)} .hero .hc.u .hn{color:var(--us)}
+.hero .hc .hl{font-size:21px; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; margin-top:8px}
+.hero .mid{flex:1; text-align:center}
+.hero .mid .hgap{font-size:44px; font-weight:800; color:var(--accent); letter-spacing:-.02em}
+.hero .mid .hgl{font-size:20px; color:var(--muted); text-transform:uppercase; letter-spacing:.07em}
+.hero .mid .hct{font-size:20px; color:var(--muted); margin-top:6px}
+
+/* dimension comparisons */
+.rows{flex:1; display:flex; flex-direction:column; justify-content:space-between; padding-top:12px}
+.cmp .ctop{display:flex; align-items:baseline; gap:12px; margin-bottom:8px}
+.cmp .cn{font-size:28px; font-weight:750; letter-spacing:-.01em}
+.cmp .cd{margin-left:auto; font-size:23px; font-weight:750; color:var(--accent); background:var(--surface-2);
+  border-radius:999px; padding:2px 14px}
+.crow{display:grid; grid-template-columns:64px 1fr 70px; align-items:center; gap:14px; margin-bottom:6px}
+.crow .ck{font-size:20px; font-weight:700; color:var(--muted)}
+.crow.k .ck{color:var(--accent-2)} .crow.u .ck{color:var(--us-2)}
+.crow .tk{height:24px; background:var(--track); border-radius:7px; position:relative; overflow:hidden}
+.crow .fl{position:absolute; inset:0 auto 0 0; border-radius:7px}
+.crow.k .fl{background:var(--accent)} .crow.u .fl{background:var(--us)}
+.crow .cv{font-size:26px; font-weight:800; text-align:right; letter-spacing:-.01em}
+.crow.k .cv{color:var(--accent)} .crow.u .cv{color:var(--us)}
+
+.caveat{background:var(--amber-soft); border-radius:14px; padding:16px 24px; font-size:20px; color:var(--ink); line-height:1.34}
+.caveat b{color:var(--amber-2); font-weight:750}
+
+footer{border-top:1px solid var(--line); margin-top:14px; padding-top:12px;
+  display:flex; justify-content:space-between; align-items:baseline; gap:20px}
+footer .src{font-size:18px; color:var(--muted); line-height:1.4; max-width:70ch}
+footer .src b{color:var(--ink); font-weight:600}
+footer .big{font-size:20px; color:var(--accent); font-weight:700; white-space:nowrap; text-transform:uppercase; letter-spacing:.1em}
+</style>
+
+<div id="stage">
+  <div class="eyebrow">SALT Index &middot; Kenya vs. U.S. baseline</div>
+  <h1>How Kenya Compares</h1>
+  <p class="sub">Self-rated spiritual life across the five shared SALT dimensions, on a 1&ndash;5 scale.</p>
+  <div class="legend">
+    <span class="lg k"><span class="sw"></span>Kenya <span class="n">n=1,760</span></span>
+    <span class="lg u"><span class="sw"></span>U.S. baseline <span class="n">n=4,860</span></span>
+  </div>
+
+  <div class="hero">
+    <div class="hc k"><div class="hn mono" id="kc">4.28</div><div class="hl">Kenya</div></div>
+    <div class="mid"><div class="hgap mono" id="gap">+0.93</div><div class="hgl">composite gap</div>
+      <div class="hct">out of 5 &middot; Kenya scores higher on every dimension</div></div>
+    <div class="hc u"><div class="hn mono" id="uc">3.35</div><div class="hl">U.S.</div></div>
+  </div>
+
+  <div class="rows" id="rows"></div>
+
+  <div class="caveat" id="caveat"></div>
+
+  <footer>
+    <div class="src"><b>Source:</b> SALT for Oral Cultures (Kenya) &amp; Validation of the SALT Index (U.S., completed responses only), Back to the Bible. Section 6 excluded (differs between surveys).</div>
+    <div class="big">5 shared dimensions</div>
+  </footer>
+</div>
+
+<script>
+(function(){
+const D={"kenya": {"Core Beliefs": {"mean": 4.51, "n": 1787}, "Personal Faith Practice": {"mean": 4.27, "n": 1760}, "Scripture Absorption": {"mean": 4.25, "n": 1753}, "Life Transformation": {"mean": 4.19, "n": 1741}, "Community Engagement": {"mean": 3.88, "n": 1732}, "Composite": {"mean": 4.28, "n": 1760}}, "us": {"Core Beliefs": {"mean": 3.74, "n": 4860}, "Personal Faith Practice": {"mean": 3.27, "n": 4860}, "Scripture Absorption": {"mean": 3.19, "n": 4860}, "Life Transformation": {"mean": 3.26, "n": 4860}, "Community Engagement": {"mean": 2.86, "n": 4860}, "Composite": {"mean": 3.35, "n": 4860}}, "order": ["Core Beliefs", "Personal Faith Practice", "Scripture Absorption", "Life Transformation", "Community Engagement", "Composite"]};
+const pos=m=>((m-1)/4*100);
+document.getElementById('kc').textContent=D.kenya.Composite.mean.toFixed(2);
+document.getElementById('uc').textContent=D.us.Composite.mean.toFixed(2);
+document.getElementById('gap').textContent='+'+(D.kenya.Composite.mean-D.us.Composite.mean).toFixed(2);
+const dims=D.order.filter(d=>d!=='Composite');
+document.getElementById('rows').innerHTML=dims.map(d=>{
+  const k=D.kenya[d].mean, u=D.us[d].mean, diff=(k-u).toFixed(2);
+  return '<div class="cmp"><div class="ctop"><span class="cn">'+d+'</span><span class="cd">+'+diff+'</span></div>'+
+    '<div class="crow k"><span class="ck">Kenya</span><div class="tk"><div class="fl" style="width:'+pos(k)+'%"></div></div><span class="cv mono">'+k.toFixed(2)+'</span></div>'+
+    '<div class="crow u"><span class="ck">U.S.</span><div class="tk"><div class="fl" style="width:'+pos(u)+'%"></div></div><span class="cv mono">'+u.toFixed(2)+'</span></div></div>';
+}).join('');
+document.getElementById('caveat').innerHTML=
+  '<b>Read as directional.</b> The two surveys used different response formats (Kenya: a &ldquo;not at all&ndash;very much&rdquo; slider; U.S.: a &ldquo;Strongly Agree&ndash;Disagree&rdquo; scale) and different samples (Kenya: oral-cultures survey pool; U.S.: general population). The next screen compares questions asked identically in both.';
+function fit(){const s=document.getElementById('stage');
+  s.style.transform='scale('+Math.min(innerWidth/1080,innerHeight/1920)+')';}
+addEventListener('resize',fit); fit();
+})();
+</script>
