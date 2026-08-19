@@ -74,23 +74,30 @@
 <div id="info"></div>
 
 <script>
-  // "Native" size the calendar renders at before we scale it down.
-  // Bigger native size = smaller effective font/UI once scaled to fit
-  // a small screen (same effect as zooming out in a browser).
-  const NATIVE_W = 1900;
-  const NATIVE_H = 1500;
-
-  document.documentElement.style.setProperty('--native-w', NATIVE_W + 'px');
-  document.documentElement.style.setProperty('--native-h', NATIVE_H + 'px');
+  // How far "zoomed out" the calendar is. 1.0 = no zoom (calendar renders
+  // at 1:1, may not all fit). Higher = smaller text/UI, more of the
+  // calendar visible at once (same effect as browser zoom-out).
+  // Tweak this one number to make text bigger (lower it, e.g. 1.1) or
+  // smaller (raise it, e.g. 1.5).
+  const ZOOM = 1.25;
 
   function fit() {
     const vw = window.innerWidth;
     const vh = window.innerHeight;
-    const scale = Math.min(vw / NATIVE_W, vh / NATIVE_H);
+
+    // Native box always matches the current viewport's aspect ratio
+    // exactly, so the scaled content fills the screen edge-to-edge —
+    // no side or top/bottom bars, on any resolution.
+    const nativeW = vw * ZOOM;
+    const nativeH = vh * ZOOM;
+    const scale = 1 / ZOOM;
+
+    document.documentElement.style.setProperty('--native-w', nativeW + 'px');
+    document.documentElement.style.setProperty('--native-h', nativeH + 'px');
     document.documentElement.style.setProperty('--scale', scale);
 
     const info = document.getElementById('info');
-    info.textContent = `${vw}×${vh} · scale ${(scale * 100).toFixed(0)}%`;
+    info.textContent = `${vw}×${vh} · zoom ${ZOOM}×`;
     info.classList.add('show');
     clearTimeout(fit._t);
     fit._t = setTimeout(() => info.classList.remove('show'), 1500);
