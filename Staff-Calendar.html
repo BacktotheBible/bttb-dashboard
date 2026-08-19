@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BTTB Calendar — Display</title>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #ffffff;
+    font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  #stage {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: #ffffff;
+  }
+
+  #frameWrap {
+    width: var(--native-w);
+    height: var(--native-h);
+    transform: scale(var(--scale, 1));
+    transform-origin: center center;
+    flex: 0 0 auto;
+  }
+
+  iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+  }
+
+  /* Small on-screen indicator, auto-hides. Press "i" to toggle back on. */
+  #info {
+    position: fixed;
+    bottom: 8px;
+    right: 10px;
+    font-size: 12px;
+    color: #94a3b8;
+    background: rgba(255,255,255,0.85);
+    padding: 3px 8px;
+    border-radius: 6px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 10;
+  }
+  #info.show { opacity: 1; }
+</style>
+</head>
+<body>
+
+<div id="stage">
+  <div id="frameWrap">
+    <iframe
+      id="calFrame"
+      src="https://outlook.office365.com/calendar/published/159edcc8089b4f6893439caf8f5a0979@backtothebible.org/81758d2a54814639b64153e6fc1055683138755574983025557/calendar.html"
+      scrolling="no"
+      title="BTTB Published Calendar"
+    ></iframe>
+  </div>
+</div>
+
+<div id="info"></div>
+
+<script>
+  // "Native" size the calendar renders at before we scale it down.
+  // Bigger native size = smaller effective font/UI once scaled to fit
+  // a small screen (same effect as zooming out in a browser).
+  const NATIVE_W = 1900;
+  const NATIVE_H = 1500;
+
+  document.documentElement.style.setProperty('--native-w', NATIVE_W + 'px');
+  document.documentElement.style.setProperty('--native-h', NATIVE_H + 'px');
+
+  function fit() {
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const scale = Math.min(vw / NATIVE_W, vh / NATIVE_H);
+    document.documentElement.style.setProperty('--scale', scale);
+
+    const info = document.getElementById('info');
+    info.textContent = `${vw}×${vh} · scale ${(scale * 100).toFixed(0)}%`;
+    info.classList.add('show');
+    clearTimeout(fit._t);
+    fit._t = setTimeout(() => info.classList.remove('show'), 1500);
+  }
+
+  window.addEventListener('resize', fit);
+  window.addEventListener('load', fit);
+  fit();
+
+  // Keep the published calendar's data current: reload periodically.
+  const REFRESH_MINUTES = 30;
+  setInterval(() => {
+    document.getElementById('calFrame').src = document.getElementById('calFrame').src;
+  }, REFRESH_MINUTES * 60 * 1000);
+
+  // Press "i" to briefly show the current resolution/scale (handy when
+  // setting this up on a new screen).
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'i' || e.key === 'I') fit();
+  });
+</script>
+
+</body>
+</html>
