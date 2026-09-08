@@ -30,4 +30,9 @@ jobs:
           WIX_API_KEY: ${{ secrets.WIX_API_KEY }}
           AIRTABLE_PAT: ${{ secrets.AIRTABLE_PAT }}
           SYNC_MODE: ${{ github.event.inputs.mode }}
+- name: Debug - Check env vars
+  run: |
+    echo "WIX_API_KEY length: ${#WIX_API_KEY}"
+    echo "First 10 chars: ${WIX_API_KEY:0:10}"
+    echo "AIRTABLE_PAT length: ${#AIRTABLE_PAT}"
         run: python scripts/blog_sync.py
