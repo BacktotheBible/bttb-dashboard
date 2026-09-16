@@ -1,0 +1,60 @@
+<title>Zambia — Syncretism & Spiritual Beliefs</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{
+  --bg:#F1EDE4;  --surface:#FBF9F4;  --surface_2:#F3EFE6;  --ink:#201D16;  --muted:#726A59;  --line:#E4DDD0;  --line_strong:#D6CCBA;  --accent:#3B5998;  --accent_2:#2D4373;  --accent_light:#7B9FD4;  --secondary:#1B7A7E;  --amber:#D4A574;  --amber_2:#A67C52;  --amber_soft:#F0E8DC;  --track:#E7E1D4;
+}
+:root[data-theme='dark']{
+  --bg:#141109; --surface:#1E1A13; --surface-2:#241F17; --ink:#EEE9DE; --muted:#A79E8D;
+  --line:#322B21; --line-strong:#463D2E; --accent:#6B92D4; --accent-2:#8FB4E0;
+  --amber:#D69A3C; --amber-2:#E8B25A; --amber-soft:#3A2E19; --track:#2A2419;
+}
+
+*{box-sizing:border-box; margin:0; padding:0}
+html,body{width:100%; height:100%; background:var(--bg)}
+body{display:flex; align-items:center; justify-content:center;
+  font-family:"Segoe UI",system-ui,sans-serif; color:var(--ink)}
+#stage{width:1080px; height:1920px; flex:none; background:var(--bg);
+  padding:50px 76px 40px; display:flex; flex-direction:column}
+.eyebrow{font-size:24px; text-transform:uppercase; letter-spacing:.22em;
+  color:var(--accent); font-weight:700}
+h1{font-size:70px; line-height:.98; font-weight:800; margin:12px 0}
+.subtitle{font-size:26px; color:var(--muted); margin:12px 0 30px}
+.callout{background:var(--amber-soft); border:2px solid var(--secondary);
+  border-radius:16px; padding:28px; margin-bottom:30px}
+.callout-text{font-size:20px; line-height:1.4; color:var(--ink)}
+.callout-text b{color:var(--secondary); font-weight:700}
+.grid{display:grid; grid-template-columns:1fr 1fr; gap:24px; flex:1}
+.stat-box{background:var(--surface); border:1px solid var(--line);
+  border-radius:16px; padding:28px; text-align:center}
+.stat-num{font-size:60px; font-weight:800; color:var(--secondary)}
+.stat-label{font-size:16px; color:var(--muted); margin-top:12px}
+</style>
+
+<div id="stage">
+  <div class="eyebrow">SALT Index · Zambia</div>
+  <h1>Syncretism</h1>
+  <p class="subtitle">Blending Christian & traditional beliefs</p>
+
+  <div class="callout">
+    <div class="callout-text"><b>46% of Zambia's respondents</b> blend Christianity with African traditional beliefs, showing the complex spiritual landscape of Zambian faith communities.</div>
+  </div>
+
+  <div class="grid">
+    <div class="stat-box">
+      <div class="stat-num">547</div>
+      <div class="stat-label">Practice Both<br>Christianity + Traditional</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">600</div>
+      <div class="stat-label">Christianity<br>Only</div>
+    </div>
+  </div>
+</div>
+
+<script>(function(){
+function fit(){const s=document.getElementById('stage');
+  s.style.transform='scale('+Math.min(innerWidth/1080,innerHeight/1920)+')';}
+addEventListener('resize',fit); fit();
+})();</script>

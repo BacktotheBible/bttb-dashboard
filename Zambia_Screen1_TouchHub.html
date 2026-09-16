@@ -1,0 +1,94 @@
+<title>Zambia SALT — Touch Hub</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{
+  --bg:#F1EDE4;  --surface:#FBF9F4;  --surface_2:#F3EFE6;  --ink:#201D16;  --muted:#726A59;  --line:#E4DDD0;  --line_strong:#D6CCBA;  --accent:#3B5998;  --accent_2:#2D4373;  --accent_light:#7B9FD4;  --secondary:#1B7A7E;  --amber:#D4A574;  --amber_2:#A67C52;  --amber_soft:#F0E8DC;  --track:#E7E1D4;
+}
+:root[data-theme='dark']{
+  --bg:#141109; --surface:#1E1A13; --surface-2:#241F17; --ink:#EEE9DE; --muted:#A79E8D;
+  --line:#322B21; --line-strong:#463D2E; --accent:#6B92D4; --accent-2:#8FB4E0;
+  --amber:#D69A3C; --amber-2:#E8B25A; --amber-soft:#3A2E19; --track:#2A2419;
+}
+
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#141109; --surface:#1E1A13; --surface-2:#241F17; --ink:#EEE9DE; --muted:#A79E8D;
+  --line:#322B21; --line-strong:#463D2E; --accent:#6B92D4; --accent-2:#8FB4E0;
+  --amber:#D69A3C; --amber-2:#E8B25A; --amber-soft:#3A2E19; --track:#2A2419;
+}}
+*{box-sizing:border-box; margin:0; padding:0}
+html,body{width:100%; height:100%; background:var(--bg); overflow:hidden}
+body{display:flex; align-items:center; justify-content:center;
+  font-family:"Segoe UI",system-ui,sans-serif; color:var(--ink)}
+#stage{width:1080px; height:1920px; flex:none; background:var(--bg);
+  display:flex; flex-direction:column; padding:40px; gap:20px}
+.header{text-align:center}
+.eyebrow{font-size:20px; text-transform:uppercase; letter-spacing:.2em;
+  color:var(--accent); font-weight:700}
+h1{font-size:60px; line-height:1; font-weight:800; margin:12px 0}
+.composite{background:var(--surface); border:2px solid var(--accent);
+  border-radius:20px; padding:32px; text-align:center}
+.comp-value{font-size:72px; font-weight:800; color:var(--accent)}
+.comp-label{font-size:18px; color:var(--muted); margin-top:8px; text-transform:uppercase}
+.grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; flex:1}
+.dimension{background:var(--surface); border:1px solid var(--line);
+  border-radius:16px; padding:24px; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; cursor:pointer; transition:all .2s}
+.dimension:hover{border-color:var(--accent); transform:scale(1.02)}
+.dim-value{font-size:56px; font-weight:800; color:var(--accent)}
+.dim-name{font-size:14px; color:var(--muted); margin-top:12px; text-align:center;
+  text-transform:uppercase; letter-spacing:.05em}
+.controls{display:flex; gap:12px; padding:20px; background:var(--surface);
+  border-radius:16px; border:1px solid var(--line)}
+.btn{flex:1; padding:14px; background:var(--accent); color:white;
+  border:none; border-radius:10px; font-weight:700; cursor:pointer}
+.btn:hover{opacity:.9}
+footer{font-size:14px; color:var(--muted); text-align:center}
+</style>
+
+<div id="stage">
+  <div class="header">
+    <div class="eyebrow">SALT Index · Zambia</div>
+    <h1>Explore the Data</h1>
+  </div>
+
+  <div class="composite">
+    <div class="comp-value">4.14</div>
+    <div class="comp-label">Composite Score</div>
+  </div>
+
+  <div class="grid">
+    <div class="dimension">
+      <div class="dim-value">4.53</div>
+      <div class="dim-name">Core Beliefs</div>
+    </div>
+    <div class="dimension">
+      <div class="dim-value">4.32</div>
+      <div class="dim-name">Personal Faith</div>
+    </div>
+    <div class="dimension">
+      <div class="dim-value">4.19</div>
+      <div class="dim-name">Scripture</div>
+    </div>
+    <div class="dimension">
+      <div class="dim-value">4.31</div>
+      <div class="dim-name">Life Transform</div>
+    </div>
+    <div class="dimension">
+      <div class="dim-value">3.80</div>
+      <div class="dim-name">Activation</div>
+    </div>
+    <div class="dimension">
+      <div class="dim-value">3.69</div>
+      <div class="dim-name">Community</div>
+    </div>
+  </div>
+
+  <footer>n=1195 respondents · Zambia SALT survey</footer>
+</div>
+
+<script>(function(){
+function fit(){const s=document.getElementById('stage');
+  s.style.transform='scale('+Math.min(innerWidth/1080,innerHeight/1920)+')';}
+addEventListener('resize',fit); fit();
+})();</script>

@@ -1,0 +1,80 @@
+<title>Zambia — Demographics</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{
+  --bg:#F1EDE4;  --surface:#FBF9F4;  --surface_2:#F3EFE6;  --ink:#201D16;  --muted:#726A59;  --line:#E4DDD0;  --line_strong:#D6CCBA;  --accent:#3B5998;  --accent_2:#2D4373;  --accent_light:#7B9FD4;  --secondary:#1B7A7E;  --amber:#D4A574;  --amber_2:#A67C52;  --amber_soft:#F0E8DC;  --track:#E7E1D4;
+}
+:root[data-theme='dark']{
+  --bg:#141109; --surface:#1E1A13; --surface-2:#241F17; --ink:#EEE9DE; --muted:#A79E8D;
+  --line:#322B21; --line-strong:#463D2E; --accent:#6B92D4; --accent-2:#8FB4E0;
+  --amber:#D69A3C; --amber-2:#E8B25A; --amber-soft:#3A2E19; --track:#2A2419;
+}
+
+*{box-sizing:border-box; margin:0; padding:0}
+html,body{width:100%; height:100%; background:var(--bg)}
+body{display:flex; align-items:center; justify-content:center;
+  font-family:"Segoe UI",system-ui,sans-serif; color:var(--ink)}
+#stage{width:1080px; height:1920px; flex:none; background:var(--bg);
+  padding:50px 76px 40px; display:flex; flex-direction:column}
+.eyebrow{font-size:24px; text-transform:uppercase; letter-spacing:.22em;
+  color:var(--accent); font-weight:700}
+h1{font-size:70px; line-height:.98; font-weight:800; margin:12px 0}
+.subtitle{font-size:26px; color:var(--muted); margin:12px 0 30px}
+.grid{display:grid; grid-template-columns:1fr 1fr; gap:24px; flex:1}
+.card{background:var(--surface); border:1px solid var(--line);
+  border-radius:18px; padding:28px; display:flex; flex-direction:column}
+.card-title{font-size:20px; font-weight:700; color:var(--accent);
+  text-transform:uppercase; letter-spacing:.05em; margin-bottom:20px}
+.bar-row{display:flex; align-items:center; gap:12px; margin-bottom:12px}
+.bar-label{font-size:15px; width:90px; color:var(--ink); font-weight:600}
+.bar{flex:1; height:24px; background:var(--track); border-radius:6px; overflow:hidden}
+.bar-fill{height:100%; background:var(--accent); border-radius:6px}
+.bar-value{font-size:14px; width:60px; text-align:right; color:var(--accent); font-weight:700}
+footer{border-top:1px solid var(--line); margin-top:20px; padding-top:12px;
+  font-size:15px; color:var(--muted)}
+</style>
+
+<div id="stage">
+  <div class="eyebrow">SALT Index · Zambia</div>
+  <h1>Who Responded</h1>
+  <p class="subtitle">Demographics from 1195 respondents</p>
+
+  <div class="grid">
+    <div class="card">
+      <div class="card-title">Gender</div>
+      <div class="bar-row">
+        <div class="bar-label">Male</div>
+        <div class="bar"><div class="bar-fill" style="width:52.3%"></div></div>
+        <div class="bar-value">625</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Female</div>
+        <div class="bar"><div class="bar-fill" style="width:47.4%"></div></div>
+        <div class="bar-value">567</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Location</div>
+      <div class="bar-row">
+        <div class="bar-label">City</div>
+        <div class="bar"><div class="bar-fill" style="width:86.1%"></div></div>
+        <div class="bar-value">1,018</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Rural</div>
+        <div class="bar"><div class="bar-fill" style="width:13.9%"></div></div>
+        <div class="bar-value">158</div>
+      </div>
+    </div>
+  </div>
+
+  <footer><b>Source:</b> SALT for Oral Cultures (Zambia), Back to the Bible</footer>
+</div>
+
+<script>(function(){
+function fit(){const s=document.getElementById('stage');
+  s.style.transform='scale('+Math.min(innerWidth/1080,innerHeight/1920)+')';}
+addEventListener('resize',fit); fit();
+})();</script>
